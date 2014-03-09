@@ -3,11 +3,47 @@ window.onerror = function() {
   alert(arguments[0] + ', ' + arguments[1] + ', ' + arguments[2]);
 };
 
+var colors = {
+  navy: '#001F3F',
+  blue: '#0074D9',
+  aqua: '#7FDBFF',
+  teal: '#39CCCC',
+  olive: '#3D9970',
+  green: '#2ECC40',
+  lime: '#01FF70',
+  yellow: '#FFDC00',
+  orange: '#FF851B',
+  red: '#FF4136',
+  maroon: '#85144B',
+  fuchsia: '#F012BE',
+  purple: '#B10DC9',
+  white: '#FFFFFF',
+  silver: '#DDDDDD',
+  gray: '#AAAAAA',
+  black: '#111111'
+};
+
 
 $(function() {
   $('.lifecounter').each(function(index, element) {
     var $el = $(element);
-    new LifeCounter($el);
+
+    var hash = window.location.hash.substr(1);
+    var life = parseInt(hash.substr(hash.indexOf('=') + 1), 10);
+
+
+    new LifeCounter($el, life);
+  });
+
+
+  $('.colorpicker [data-color]').click(function(event) {
+    var $el = $(this);
+    var color = $el.attr('data-color');
+    var c = colors[color];
+
+    if(c) {
+      $('body').css('background-color', c);
+    }
   });
 });
 
@@ -57,9 +93,9 @@ LifeCounter.prototype.handletouchrelease = function(x, y) {
   var dy = y - this.touchstart_y;
 
   if(dx > 20)
-    this.increase();
-  else if(dx < -20)
     this.deacrease();
+  else if(dx < -20)
+    this.increase();
 };
 
 LifeCounter.prototype.onclick = function(event) {
@@ -86,4 +122,10 @@ LifeCounter.prototype.deacrease = function() {
 LifeCounter.prototype.setvalue = function(value) {
   this.value = value;
   this.$el.find('.value').text(this.value);
+
+  if(window.history.pushState) {
+    window.history.pushState(null, null, '#life=' + this.value);
+  } else {
+    window.location.hash = '#life=' + this.value;
+  }
 };

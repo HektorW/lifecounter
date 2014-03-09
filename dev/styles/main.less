@@ -17,9 +17,13 @@
 @gray: #AAAAAA;
 @black: #111111;
 
+html, body {
+  height: 100%;
+}
 
 body {
-  background-color: @navy;
+  background-color: @red;
+  transition: background-color 1s;
 }
 
 
@@ -28,6 +32,39 @@ body {
   color: @silver;
 
   .value {
-    font-size: 10em;
+    font-size: 16em;
+  }
+}
+
+.colorpicker {
+  position: absolute;
+  bottom: 1em;
+  text-align: center;
+  margin: auto;
+  width: 100%;
+
+  .color {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    border: solid @silver 1px;
+
+    &[data-color=navy] { background-color: @navy; }
+    &[data-color=blue] { background-color: @blue; }
+    &[data-color=aqua] { background-color: @aqua; }
+    &[data-color=teal] { background-color: @teal; }
+    &[data-color=olive] { background-color: @olive; }
+    &[data-color=green] { background-color: @green; }
+    &[data-color=lime] { background-color: @lime; }
+    &[data-color=yellow] { background-color: @yellow; }
+    &[data-color=orange] { background-color: @orange; }
+    &[data-color=red] { background-color: @red; }
+    &[data-color=maroon] { background-color: @maroon; }
+    &[data-color=fuchsia] { background-color: @fuchsia; }
+    &[data-color=purple] { background-color: @purple; }
+    &[data-color=white] { background-color: @white; }
+    &[data-color=silver] { background-color: @silver; }
+    &[data-color=gray] { background-color: @gray; }
+    &[data-color=black] { background-color: @black; }
   }
 }

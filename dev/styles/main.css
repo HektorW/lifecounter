@@ -1,5 +1,12 @@
+html,
 body {
-  background-color: #001f3f;
+  height: 100%;
+}
+
+body {
+  background-color: #ff4136;
+  -webkit-transition: background-color 1s;
+  transition: background-color 1s;
 }
 
 .lifecounter {
@@ -8,7 +15,90 @@ body {
 }
 
 .lifecounter .value {
-  font-size: 10em;
+  font-size: 16em;
+}
+
+.colorpicker {
+  position: absolute;
+  bottom: 1em;
+  text-align: center;
+  margin: auto;
+  width: 100%;
+}
+
+.colorpicker .color {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border: solid #dddddd 1px;
+}
+
+.colorpicker .color[data-color=navy] {
+  background-color: #001f3f;
+}
+
+.colorpicker .color[data-color=blue] {
+  background-color: #0074d9;
+}
+
+.colorpicker .color[data-color=aqua] {
+  background-color: #7fdbff;
+}
+
+.colorpicker .color[data-color=teal] {
+  background-color: #39cccc;
+}
+
+.colorpicker .color[data-color=olive] {
+  background-color: #3d9970;
+}
+
+.colorpicker .color[data-color=green] {
+  background-color: #2ecc40;
+}
+
+.colorpicker .color[data-color=lime] {
+  background-color: #01ff70;
+}
+
+.colorpicker .color[data-color=yellow] {
+  background-color: #ffdc00;
+}
+
+.colorpicker .color[data-color=orange] {
+  background-color: #ff851b;
+}
+
+.colorpicker .color[data-color=red] {
+  background-color: #ff4136;
+}
+
+.colorpicker .color[data-color=maroon] {
+  background-color: #85144b;
+}
+
+.colorpicker .color[data-color=fuchsia] {
+  background-color: #f012be;
+}
+
+.colorpicker .color[data-color=purple] {
+  background-color: #b10dc9;
+}
+
+.colorpicker .color[data-color=white] {
+  background-color: #ffffff;
+}
+
+.colorpicker .color[data-color=silver] {
+  background-color: #dddddd;
+}
+
+.colorpicker .color[data-color=gray] {
+  background-color: #aaaaaa;
+}
+
+.colorpicker .color[data-color=black] {
+  background-color: #111111;
 }
 
 /*! normalize.css v2.1.3 | MIT License | git.io/normalize */
