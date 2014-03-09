@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Life counter
 ======
 

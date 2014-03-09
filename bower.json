@@ -5,5 +5,7 @@
     "Hektor Wallin <hektorw@gmail.com>"
   ],
   "dependencies": {
+    "jquery": "~2.1.0",
+    "underscore": "~1.6.0"
   }
 }
