@@ -119,9 +119,33 @@ LifeCounter.prototype.deacrease = function() {
   this.setvalue(this.value - 1);
 };
 
-LifeCounter.prototype.setvalue = function(value) {
+LifeCounter.prototype.setvalue = function(value, animate) {
+  var $val = this.$el.find('.value'),
+      $target = $val.find('.target'),
+      $from = $val.find('.from');
+
+  $val.find('div')
+    .removeAttr('style');
+  $target.css({
+    '-webkit-transform': 'rotateY(-180deg)'
+  }).text(value);
+  $from.text(this.value);
+
+  setTimeout(function() {
+    $target.css({
+     '-webkit-transform': 'rotateY(0deg)',
+     '-webkit-backface-visibility': 'hidden',
+     'transition': '-webkit-transform 0.3s'
+    });
+    $from.css({
+     '-webkit-transform': 'rotateY(180deg)',
+     '-webkit-backface-visibility': 'hidden',
+     'transition': '-webkit-transform 0.3s'
+    });
+  }, 0);
   this.value = value;
-  this.$el.find('.value').text(this.value);
+
+  // this.$el.find('.value').text(this.value);
 
   if(window.history.replaceState) {
     window.history.replaceState(null, null, '#life=' + this.value);

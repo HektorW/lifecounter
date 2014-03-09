@@ -4,7 +4,7 @@ body {
 }
 
 body {
-  background-color: #ff4136;
+  background-color: #001f3f;
   -webkit-transition: background-color 1s;
   transition: background-color 1s;
 }
@@ -16,6 +16,14 @@ body {
 
 .lifecounter .value {
   font-size: 16em;
+  position: relative;
+}
+
+.lifecounter .value .target,
+.lifecounter .value .from {
+  position: absolute;
+  left: 50%;
+  margin-left: -20%;
 }
 
 .colorpicker {

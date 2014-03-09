@@ -22,7 +22,7 @@ html, body {
 }
 
 body {
-  background-color: @red;
+  background-color: @navy;
   transition: background-color 1s;
 }
 
@@ -33,6 +33,13 @@ body {
 
   .value {
     font-size: 16em;
+    position: relative;
+
+    .target, .from {
+      position: absolute;
+      left: 50%;
+      margin-left: -20%;
+    }
   }
 }
 
