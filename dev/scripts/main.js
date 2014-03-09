@@ -123,8 +123,8 @@ LifeCounter.prototype.setvalue = function(value) {
   this.value = value;
   this.$el.find('.value').text(this.value);
 
-  if(window.history.pushState) {
-    window.history.pushState(null, null, '#life=' + this.value);
+  if(window.history.replaceState) {
+    window.history.replaceState(null, null, '#life=' + this.value);
   } else {
     window.location.hash = '#life=' + this.value;
   }
