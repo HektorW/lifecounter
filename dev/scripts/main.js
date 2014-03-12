@@ -1,3 +1,4 @@
+/* global alert, _, console */
 
 window.onerror = function() {
   alert(arguments[0] + ', ' + arguments[1] + ', ' + arguments[2]);
@@ -33,6 +34,10 @@ $(function() {
 
 
     new LifeCounter($el, life);
+
+    $('body').on('click', function() {
+      toggleFullscreen(document.body);
+    });
   });
 
 
@@ -41,11 +46,49 @@ $(function() {
     var color = $el.attr('data-color');
     var c = colors[color];
 
-    if(c) {
+    if (c) {
       $('body').css('background-color', c);
     }
   });
 });
+
+var prefixes = ['ms', 'moz', 'webkit'];
+
+function toggleFullscreen(element) {
+  var doc = window.document;
+  if (getPrefixed(doc, 'fullscreenElement') || getPrefixed(doc, 'fullScreenElement')) {
+    return requestFullscreenAction(document, 'cancel') || requestFullscreenAction(document, 'exit');
+  } else {
+    return requestFullscreenAction(element, 'request');
+  }
+}
+
+function getPrefixed(el, prop) {
+  if (el[prop])
+    return el[prop];
+  prop = capitalize(prop);
+  for (var i = prefixes.length; i--;) {
+    if (el[prefixes[i] + prop])
+      return el[prefixes[i] + prop];
+  }
+}
+// request or cancel
+function requestFullscreenAction(element, action) {
+  var fs = ['Fullscreen', 'FullScreen'];
+  var i, fn;
+  for (i = fs.length; i--;) {
+    fn = getPrefixed(element, action + fs[i]);
+    if (fn) {
+      fn.call(element);
+      return true;
+    }
+  }
+}
+
+
+function capitalize(str) {
+  return str[0].toUpperCase() + str.substr(1);
+}
 
 
 function LifeCounter($el, value) {
@@ -59,10 +102,10 @@ function LifeCounter($el, value) {
     .on('touchmove', this.ontouchmove)
     .on('touchend', this.ontouchend)
     .on('touchcancel', this.ontouchcancel)
-    .on('click', this.onclick);
+  // .on('click', this.onclick);
 
 
-    this.setvalue(this.value);
+  this.setvalue(this.value);
 }
 LifeCounter.prototype.ontouchstart = function(event) {
   var touches = event.originalEvent.touches;
@@ -92,15 +135,15 @@ LifeCounter.prototype.handletouchrelease = function(x, y) {
   var dx = x - this.touchstart_x;
   var dy = y - this.touchstart_y;
 
-  if(dx > 20)
+  if (dx > 20)
     this.deacrease();
-  else if(dx < -20)
+  else if (dx < -20)
     this.increase();
 };
 
 LifeCounter.prototype.onclick = function(event) {
   console.log(event);
-  switch(event.which) {
+  switch (event.which) {
     case 1:
       this.increase();
       break;
@@ -121,10 +164,10 @@ LifeCounter.prototype.deacrease = function() {
 
 LifeCounter.prototype.setvalue = function(value, animate) {
   var $val = this.$el.find('.value'),
-      $target = $val.find('.target'),
-      $from = $val.find('.from');
+    $target = $val.find('.target'),
+    $from = $val.find('.from');
 
-  $val.find('div')
+  /*$val.find('div')
     .removeAttr('style');
   $target.css({
     '-webkit-transform': 'rotateY(-180deg)'
@@ -133,21 +176,21 @@ LifeCounter.prototype.setvalue = function(value, animate) {
 
   setTimeout(function() {
     $target.css({
-     '-webkit-transform': 'rotateY(0deg)',
-     '-webkit-backface-visibility': 'hidden',
-     'transition': '-webkit-transform 0.3s'
+      '-webkit-transform': 'rotateY(0deg)',
+      '-webkit-backface-visibility': 'hidden',
+      'transition': '-webkit-transform 0.3s'
     });
     $from.css({
-     '-webkit-transform': 'rotateY(180deg)',
-     '-webkit-backface-visibility': 'hidden',
-     'transition': '-webkit-transform 0.3s'
+      '-webkit-transform': 'rotateY(180deg)',
+      '-webkit-backface-visibility': 'hidden',
+      'transition': '-webkit-transform 0.3s'
     });
-  }, 0);
+  }, 0);*/
   this.value = value;
 
-  // this.$el.find('.value').text(this.value);
+  this.$el.find('.value').text(this.value);
 
-  if(window.history.replaceState) {
+  if (window.history.replaceState) {
     window.history.replaceState(null, null, '#life=' + this.value);
   } else {
     window.location.hash = '#life=' + this.value;
