@@ -44,25 +44,13 @@ module.exports = function(grunt) {
           base: '<%= app.dev %>'
         }
       }
-      /*,
-      test: {
-        options: {
-          base: [
-            'test',
-            '<%= app.dev %>'
-          ]
-        }
-      }*/
     },
 
-    // mocha: {
-    //   all: {
-    //     options: {
-    //       run: true,
-    //       urls: [ 'http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html' ]
-    //     }
-    //   }
-    // },
+    bowerInstall: {
+      target: {
+        src: ['<%= app.dev %>/index.html']
+      }
+    },
 
     less: {
       options: {
@@ -108,14 +96,37 @@ module.exports = function(grunt) {
             '<%= app.dist %>'
           ]
         }]
+      },
+    },
+
+    uglify: {
+      build: {
+        options: {
+          mangle: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<% app.dist %>',
+          src: '**/*.js',
+          dest: '<%= app.dist %>/scripts'
+        }]
       }
+    },
+
+    useminPrepare: {
+      options: {
+        dest: '<%= app.dist %>'
+      },
+      html: '<%= app.dist %>/index.html'
+    },
+    usemin: {
+      options: {
+        dirs: ['<%= app.dist %>']
+      },
+      html: ['<%= app.dist %>/*.html'],
+      css: ['<%= app.dist %>/styles/*.css']
     }
   });
-
-  // grunt.registerTask('test', [
-  //   'connect:test',
-  //   'mocha'
-  // ]);
 
   grunt.registerTask('server', [
     'less:dev',
@@ -132,7 +143,9 @@ module.exports = function(grunt) {
     'clean:dist',
     'copy:build',
     'less:dist',
-    'autoprefixer:dist'
+    'autoprefixer:dist',
+    'uglify',
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
