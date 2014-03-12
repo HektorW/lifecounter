@@ -32,7 +32,7 @@ body {
   color: @silver;
 
   .value {
-    font-size: 16em;
+    font-size: 22em;
     position: relative;
 
     .target, .from {
@@ -73,5 +73,13 @@ body {
     &[data-color=silver] { background-color: @silver; }
     &[data-color=gray] { background-color: @gray; }
     &[data-color=black] { background-color: @black; }
+  }
+}
+
+@media (max-width: 320px) {
+  .lifecounter {
+    .value {
+      font-size: 18em;
+    }
   }
 }

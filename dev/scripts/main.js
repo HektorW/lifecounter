@@ -47,7 +47,7 @@ $(function() {
   });
 
 
-  $('.colorpicker [data-color]').click(function(event) {
+  $('.colorpicker [data-color]').click(function() {
     var $el = $(this);
     var color = $el.attr('data-color');
     var c = colors[color];
@@ -56,6 +56,12 @@ $(function() {
       $('body').css('background-color', c);
     }
   });
+
+  var ua = navigator.userAgent;
+  var iOS = !! (~ua.indexOf('iPhone') || ~ua.indexOf('iPod') || ~ua.indexOf('iPad'));
+  if (iOS) {
+    setTimeout(keepalive, 2000);
+  }
 });
 
 var prefixes = ['ms', 'moz', 'webkit'];
@@ -111,8 +117,7 @@ function LifeCounter($el, value) {
     .on('touchstart', this.ontouchstart)
     .on('touchmove', this.ontouchmove)
     .on('touchend', this.ontouchend)
-    .on('touchcancel', this.ontouchcancel)
-  // .on('click', this.onclick);
+    .on('touchcancel', this.ontouchcancel);
 
 
   this.setvalue(this.value);
@@ -206,3 +211,27 @@ LifeCounter.prototype.setvalue = function(value, animate) {
     window.location.hash = '#life=' + this.value;
   }
 };
+
+
+function keepalive() {
+  window.location.href = '/goback#life=' + (window.location.hash.match(/life\=([0-9]+)/) || [])[1] || 1;
+  setTimeout(function() {
+    window.stop();
+  }, 0);
+  setTimeout(keepalive, 10000);
+}
+
+var DEBUG = (function() {
+  var $el = $('<div id="debug"></div>');
+  $el.css({
+    position: 'fixed',
+    color: 'white',
+    top: '10px',
+    left: '10px'
+  });
+  $('body').append($el);
+
+  return function(str) {
+    $el.append($('<p>').text(str));
+  };
+}());
