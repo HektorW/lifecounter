@@ -35,8 +35,14 @@ $(function() {
 
     new LifeCounter($el, life);
 
-    $('body').on('click', function() {
-      toggleFullscreen(document.body);
+    var lastClick = -1;
+    var delay = 500;
+    $('body').click(function() {
+      var t = new Date().getTime();
+      if (t - lastClick < delay) {
+        toggleFullscreen(document.documentElement);
+      }
+      lastClick = t;
     });
   });
 
@@ -55,6 +61,10 @@ $(function() {
 var prefixes = ['ms', 'moz', 'webkit'];
 
 function toggleFullscreen(element) {
+  if (window.navigator.standalone) { // the app is installed
+    return;
+  }
+
   var doc = window.document;
   if (getPrefixed(doc, 'fullscreenElement') || getPrefixed(doc, 'fullScreenElement')) {
     return requestFullscreenAction(document, 'cancel') || requestFullscreenAction(document, 'exit');
