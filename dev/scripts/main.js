@@ -58,9 +58,10 @@ $(function() {
   });
 
   var ua = navigator.userAgent;
+
   var iOS = !! (~ua.indexOf('iPhone') || ~ua.indexOf('iPod') || ~ua.indexOf('iPad'));
   if (iOS) {
-    setTimeout(keepalive, 2000);
+    keepScreenAliveHax();
   }
 });
 
@@ -213,13 +214,34 @@ LifeCounter.prototype.setvalue = function(value, animate) {
 };
 
 
-function keepalive() {
-  window.location.href = '/goback#life=' + (window.location.hash.match(/life\=([0-9]+)/) || [])[1] || 1;
-  setTimeout(function() {
-    window.stop();
-  }, 0);
-  setTimeout(keepalive, 10000);
+function keepScreenAliveHax() {
+  var _id;
+
+  function keepalive() {
+    if (!_id)
+      return;
+
+    window.location.href = '/goback#life=' + (window.location.hash.match(/life\=([0-9]+)/) || [])[1] || 1;
+    setTimeout(function() {
+      window.stop();
+    }, 0);
+    _id = setTimeout(keepalive, 30000);
+  }
+
+  $(window).blur(function() {
+    clearTimeout(_id);
+    _id = null;
+  }).focus(function() {
+    clearTimeout(_id);
+    _id = null;
+    _id = setTimeout(keepalive, 300000);
+  });
+
+  if (document.visibilityState === 'visible') {
+    _id = setTimeout(keepalive, 300000);
+  }
 }
+
 
 var DEBUG = (function() {
   var $el = $('<div id="debug"></div>');
