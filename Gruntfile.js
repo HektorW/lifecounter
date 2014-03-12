@@ -1,6 +1,7 @@
-"use strict";
+/* global module */
 
 module.exports = function(grunt) {
+  "use strict";
   require('time-grunt')(grunt);
   require('load-grunt-tasks')(grunt);
 
@@ -42,7 +43,8 @@ module.exports = function(grunt) {
           // open: true,
           base: '<%= app.dev %>'
         }
-      }/*,
+      }
+      /*,
       test: {
         options: {
           base: [
@@ -64,8 +66,7 @@ module.exports = function(grunt) {
 
     less: {
       options: {
-        files: [
-        ]
+        files: []
       },
       dev: {
         files: {
@@ -80,8 +81,7 @@ module.exports = function(grunt) {
     },
 
     autoprefixer: {
-      options: {
-      },
+      options: {},
       dev: {
         src: '<%= app.dev %>/styles/main.css'
       },
@@ -90,9 +90,17 @@ module.exports = function(grunt) {
       }
     },
 
+    copy: {
+      build: {
+        cwd: '<%= app.dev %>',
+        src: ['**', '!**/*.less', '!**/*.css'],
+        dest: '<%= app.dist %>',
+        expand: true
+      }
+    },
+
     clean: {
-      dev: {
-      },
+      dev: {},
       dist: {
         files: [{
           dot: true,
@@ -122,6 +130,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('dist', [
     'clean:dist',
+    'copy:build',
     'less:dist',
     'autoprefixer:dist'
   ]);
