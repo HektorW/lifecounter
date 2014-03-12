@@ -27,7 +27,7 @@ var colors = {
 
 $(function() {
   $('.lifecounter').each(function(index, element) {
-    var $el = $(element);
+    var $el = $('body');
 
     var hash = window.location.hash.substr(1);
     var life = parseInt(hash.substr(hash.indexOf('=') + 1), 10);
@@ -123,7 +123,7 @@ function LifeCounter($el, value) {
   this.setvalue(this.value);
 }
 LifeCounter.prototype.ontouchstart = function(event) {
-  var touches = event.originalEvent.touches;
+  var touches = event.originalEvent.touches || {};
 
   this.touchstart_x = touches[0].pageX;
   this.touchstart_y = touches[0].pageY;

@@ -9,21 +9,26 @@ body {
   transition: background-color 1s;
 }
 
+.wrapper {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper .cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
 .lifecounter {
+  margin-top: -70px;
   text-align: center;
   color: #dddddd;
 }
 
 .lifecounter .value {
-  font-size: 22em;
+  font-size: 28em;
   position: relative;
-}
-
-.lifecounter .value .target,
-.lifecounter .value .from {
-  position: absolute;
-  left: 50%;
-  margin-left: -20%;
 }
 
 .colorpicker {
@@ -109,9 +114,15 @@ body {
   background-color: #111111;
 }
 
-@media (max-width: 320px) {
+@media (max-device-width: 320px) and (max-device-height: 480px) {
   .lifecounter .value {
-    font-size: 18em;
+    font-size: 16em;
+  }
+}
+
+@media (min-device-width: 321px) and (max-device-width: 360px) and (max-device-height: 640px) {
+  .lifecounter .value {
+    font-size: 20em;
   }
 }
 
